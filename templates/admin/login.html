@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Admin Login</h2>
+<form method="POST" class="col-md-4">
+  {{ form.hidden_tag() }}
+  <div class="mb-3">
+    {{ form.password.label(class="form-label") }}
+    {{ form.password(class="form-control") }}
+  </div>
+  <button class="btn btn-dark">Login</button>
+</form>
+{% endblock %}

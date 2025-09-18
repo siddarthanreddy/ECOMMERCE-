@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h3>Your Cart</h3>
+  <form action="{{ url_for('cart_update') }}" method="post">
+    <table class="table table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th>Product</th>
+          <th>Image</th>
+          <th>Price</th>
+          <th>Qty</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in cart.values() %}
+        <tr>
+          <td>{{ item.name }}</td>
+          <td><img src="{{ url_for('static', filename='uploads/' ~ item.image_url) }}" width="60" alt="{{ item.name }}"></td>
+          <td>₹{{ "%.2f"|format(item.price) }}</td>
+          <td><input type="number" name="qty_{{ item.id }}" value="{{ item.qty }}" class="form-control w-50"></td>
+          <td>₹{{ "%.2f"|format(item.price * item.qty) }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <h4 class="mt-3">Subtotal: ₹{{ "%.2f"|format(subtotal) }}</h4>
+    <button type="submit" class="btn btn-warning">Update Cart</button>
+    <a href="{{ url_for('checkout') }}" class="btn btn-success">Checkout</a>
+  </form>
+</div>
+{% endblock %}
