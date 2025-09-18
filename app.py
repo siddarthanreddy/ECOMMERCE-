@@ -17,7 +17,7 @@ def allowed_file(filename):
 def create_app():
     app = Flask(__name__)
     app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "devsecret")
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///ecommerce.db"
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///ecommerce.db")
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
     os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -197,4 +197,5 @@ def create_app():
 
 if __name__ == "__main__":
     app = create_app()
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))  # Render assigns a PORT
+    app.run(host="0.0.0.0", port=port, debug=True)
